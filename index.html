@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="img/logo.svg" type="image/svg+xml">
+<meta property="og:title" content="Cin-MinAI">
+<meta property="og:description" content="Linux Mint with an AI assistant built in. It runs on your own graphics card. Free, no ads, no telemetry, no account.">
+<meta property="og:image" content="https://cin-minai.github.io/img/sidebar-web-search.png">
+<title>Cin-MinAI</title>
+<meta name="description" content="Linux Mint with an AI assistant built in. It runs on your own graphics card. Free, no ads, no telemetry, no account.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: the page reads like the desktop it describes. A dark "space" ground, the sidebar's own status line as the
+   recurring motif, real screenshots as the evidence, and one condensed display face taken from the logo. */
+:root {
+  --void: #000000;          /* logo background, boot screens */
+  --panel: #02141C;         /* deep panel: the sidebar's ground */
+  --raised: #072430;        /* one step up from the panel */
+  --line: #12404D;          /* circuit-teal hairlines */
+  --signal: #00A4EC;        /* the brand colour */
+  --ready: #18D42C;         /* only for "ready" dots, as in the real sidebar */
+  --glow: #34B5B8;          /* hover and focus */
+  --text: #E6F4F8;
+  --muted: #9DBCC6;
+  --on-signal: #000000;
+  --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", Verdana, sans-serif;
+  --mono: "JetBrains Mono", "DejaVu Sans Mono", Consolas, monospace;
+  --step--1: 0.875rem; --step-0: 1.0625rem; --step-1: 1.3rem; --step-2: 1.75rem; --step-3: 2.5rem; --step-4: clamp(2.6rem, 7vw, 5rem);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--void); }
+body { margin: 0; background: var(--void); color: var(--text); font: 400 var(--step-0)/1.6 var(--body); }
+a { color: var(--signal); text-underline-offset: 3px; }
+a:hover { color: var(--glow); }
+a:focus-visible, .btn:focus-visible { outline: 2px solid var(--glow); outline-offset: 3px; border-radius: 4px; }
+img { max-width: 100%; height: auto; display: block; }
+.wrap { max-width: 72rem; margin: 0 auto; padding-inline: 20px; }
+h1, h2, h3 { font-family: var(--display); font-stretch: 70%; font-weight: 800; line-height: 1.05; text-wrap: balance; margin: 0; letter-spacing: 0.005em; }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-1); font-stretch: 85%; font-weight: 750; line-height: 1.2; }
+p { margin: 0; max-width: 65ch; }
+.eyebrow { font-family: var(--mono); font-size: var(--step--1); color: var(--muted); letter-spacing: 0.04em; }
+.status { display: inline-flex; align-items: center; gap: 0.55em; font-family: var(--mono); font-size: var(--step--1); color: var(--muted); }
+.status::before { content: ""; width: 0.65em; height: 0.65em; border-radius: 50%; background: var(--ready); box-shadow: 0 0 10px var(--ready); flex: none; }
+.status.lab::before { background: transparent; border: 2px solid var(--signal); box-shadow: none; }
+section { padding-block: clamp(3.5rem, 8vw, 6.5rem); }
+section + section { border-top: 1px solid var(--line); }
+
+/* hero */
+.hero { padding-block: clamp(2rem, 5vw, 4rem) clamp(3rem, 7vw, 5rem); background:
+  radial-gradient(60rem 30rem at 75% 20%, rgba(0,164,236,0.16), transparent 60%),
+  radial-gradient(40rem 24rem at 10% 90%, rgba(16,105,121,0.22), transparent 60%), var(--void); }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: clamp(2rem, 6vw, 4rem); }
+.top img { width: 9.5rem; }
+.top nav { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: var(--step--1); }
+.top nav a { color: var(--muted); text-decoration: none; }
+.top nav a:hover { color: var(--text); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.hero h1 { font-size: var(--step-4); font-weight: 850; }
+.hero h1 em { font-style: normal; color: var(--signal); }
+.lede { margin-top: 1.25rem; font-size: var(--step-1); color: var(--text); }
+.promise { margin-top: 1.25rem; font-family: var(--display); font-stretch: 85%; font-weight: 700; font-size: var(--step-1); color: var(--muted); }
+.promise b { color: var(--text); }
+.actions { margin-top: 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.3rem; border-radius: 999px; font-family: var(--display); font-stretch: 90%; font-weight: 750; font-size: var(--step-0); text-decoration: none; }
+.btn.primary { background: var(--signal); color: var(--on-signal); }
+.btn.primary:hover { background: var(--glow); color: var(--on-signal); }
+.btn.ghost { border: 1px solid var(--line); color: var(--text); }
+.btn.ghost:hover { border-color: var(--glow); color: var(--text); }
+.note { margin-top: 1rem; font-size: var(--step--1); color: var(--muted); }
+.shot { border-radius: 10px; border: 1px solid var(--line); box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,164,236,0.08); background: var(--panel); }
+figcaption { margin-top: 0.75rem; font-size: var(--step--1); color: var(--muted); max-width: 60ch; }
+
+/* the assistants */
+.assistants-head { display: grid; gap: 1rem; margin-bottom: 2.5rem; }
+.assistants { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; display: grid; gap: 0.85rem; align-content: start; min-width: 0; }
+.card .ask { font-family: var(--mono); font-size: var(--step--1); color: var(--text); background: var(--raised); border-radius: 8px; padding: 0.7rem 0.85rem; border-left: 2px solid var(--signal); }
+.card p { color: var(--muted); }
+.card.lab { background: transparent; border-style: dashed; }
+
+/* story strips */
+.story { display: grid; gap: 2.5rem; }
+.story-head { display: grid; gap: 1rem; }
+.steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.5rem; counter-reset: step; }
+.steps figure { margin: 0; min-width: 0; }
+.steps figcaption { display: flex; gap: 0.6rem; align-items: baseline; }
+.steps figcaption::before { counter-increment: step; content: counter(step); font-family: var(--mono); color: var(--signal); font-weight: 600; flex: none; }
+
+/* principles */
+.principles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 3rem; }
+.principles div { display: grid; gap: 0.5rem; min-width: 0; }
+.principles p { color: var(--muted); }
+
+/* try it */
+.try { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); }
+.try ol { margin: 1.5rem 0 0; padding: 0; list-style: none; display: grid; gap: 1.1rem; counter-reset: t; }
+.try li { display: grid; grid-template-columns: 2.2rem minmax(0, 1fr); gap: 0.75rem; }
+.try li::before { counter-increment: t; content: counter(t); font-family: var(--display); font-stretch: 70%; font-weight: 850; font-size: var(--step-2); color: var(--signal); line-height: 1; }
+.try li b { display: block; }
+.try li span { color: var(--muted); }
+.needs { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; display: grid; gap: 1rem; align-content: start; }
+.needs ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.6rem; color: var(--muted); }
+.needs li b { color: var(--text); }
+
+/* built in the open */
+.photos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+.photos figure { margin: 0; min-width: 0; }
+.photos img { border-radius: 8px; border: 1px solid var(--line); aspect-ratio: 3 / 4; object-fit: cover; width: 100%; }
+.open-links { margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+footer { border-top: 1px solid var(--line); padding-block: 2.5rem 3rem; color: var(--muted); font-size: var(--step--1); }
+footer .wrap { display: grid; gap: 1rem; }
+.credits { max-width: 75ch; }
+
+@media (max-width: 900px) {
+  .hero-grid, .try { grid-template-columns: minmax(0, 1fr); }
+  .assistants { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .photos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .assistants, .steps, .principles { grid-template-columns: minmax(0, 1fr); }
+  .top nav { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn { transition: background-color 0.15s, border-color 0.15s, color 0.15s; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="top">
+      <img src="img/logo.svg" alt="Cin-MinAI" width="152" height="50">
+      <nav aria-label="Sections">
+        <a href="#assistants">What it does</a>
+        <a href="#in-charge">You're in charge</a>
+        <a href="#try">Try it</a>
+        <a href="#open">Built in the open</a>
+      </nav>
+    </div>
+    <div class="hero-grid">
+      <div>
+        <p class="status">Ready · runs on this computer · what you type stays here</p>
+        <h1 style="margin-top:1rem">Linux Mint, with an AI <em>built in</em>.</h1>
+        <p class="lede">An assistant that helps you use your computer, build things, learn and write. It runs on your own
+          graphics card, works without the internet, and asks before it changes anything.</p>
+        <p class="promise"><b>Free.</b> No ads, no telemetry, no account. Download it and use it wherever, however you need it.</p>
+        <div class="actions">
+          <a class="btn primary" href="https://huggingface.co/CinMin/Cin-MinAI-OS">Download 0.0.1 (5.9 GB)</a>
+          <a class="btn ghost" href="https://github.com/Cin-MinAI/Cin-MinAI">Source code on GitHub</a>
+        </div>
+        <p class="note">First public alpha. Try it from a USB stick first: trying it changes nothing on your computer.</p>
+      </div>
+      <figure style="margin:0">
+        <img class="shot" src="img/sidebar-web-search.png" width="1797" height="1620"
+             alt="The Cin-MinAI sidebar answering “Who started Linux?”: it shows exactly what would be sent to the web, waits for the Search click, then answers with three sources">
+        <figcaption>Questions about the world go to the web only when you click Search, and it shows you exactly what would be sent.</figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="assistants">
+    <div class="wrap">
+      <div class="assistants-head">
+        <p class="eyebrow">ONE ASSISTANT, MANY JOBS</p>
+        <h2>Everything it helps with, on your own machine</h2>
+        <p style="color:var(--muted)">One assistant lives in the sidebar (or press Super+A). A second workspace, AICUI, is for building
+          and learning code. Both run locally, on the model that fits your computer.</p>
+      </div>
+      <div class="assistants">
+        <article class="card">
+          <span class="status">In 0.0.1</span>
+          <h3>Your computer's assistant</h3>
+          <p class="ask">Is my disk OK? It froze twice today.</p>
+          <p>It reads your system's own records and explains what's wrong and what to do first, in plain words, without the terminal.</p>
+        </article>
+        <article class="card">
+          <span class="status">In 0.0.1</span>
+          <h3>Learn Linux, coming from Windows</h3>
+          <p class="ask">Where's my C: drive? How do I do updates, like Windows Update?</p>
+          <p>It knows Mint's real menu names, gives numbered steps and opens the right settings for you. In English, Spanish, Portuguese, French, German and Japanese.</p>
+        </article>
+        <article class="card">
+          <span class="status">In 0.0.1</span>
+          <h3>Coding assistant</h3>
+          <p class="ask">Make a wedding page with an RSVP form and a countdown.</p>
+          <p>AICUI writes the project, runs it, checks it and shows you every change before it makes it. On ten-year-old hardware it built a game and a wedding page.</p>
+        </article>
+        <article class="card">
+          <span class="status">In 0.0.1</span>
+          <h3>Teaching assistant</h3>
+          <p class="ask">Don't fix it yet. Tell me what I did wrong, then we can fix it.</p>
+          <p>It explains your mistake line by line, waits until you want the fix, then runs your code to prove it works.</p>
+        </article>
+        <article class="card">
+          <span class="status">In 0.0.1</span>
+          <h3>Writing assistant</h3>
+          <p class="ask">I have an idea for a story but I'm stuck.</p>
+          <p>Throw ideas at the wall: it keeps them as notes (facts, characters, places, ideas) and asks you questions, step by step through the shape of a story, until it comes together. Plus a private journal that stays yours.</p>
+        </article>
+        <article class="card">
+          <span class="status">In 0.0.1</span>
+          <h3>Planning assistant</h3>
+          <p class="ask">Page structure · styling · mobile menu · countdown · RSVP · final check</p>
+          <p>It breaks a project into goals and ticks each one only when the project's own checks pass. Not when it thinks it's done.</p>
+        </article>
+      </div>
+      <article class="card lab" style="margin-top:1.25rem">
+        <span class="status lab">In the lab, coming next</span>
+        <h3>It watches the video so you don't have to</h3>
+        <p>Show it a photo, a screenshot of an error, a scanned letter or a video, and it describes it, summarizes it or reads it out.
+          Point it at a repair video and ask what happens at the part you're stuck on. It works in our lab today and comes to Cin-MinAI in an update.</p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap story">
+      <div class="story-head">
+        <p class="eyebrow">THE CODING ASSISTANT, ON A REAL PROJECT</p>
+        <h2>“Add a note about bringing swimming gear”</h2>
+        <p style="color:var(--muted)">A wedding page AICUI built earlier, and one small change. Recorded on a 2014 quad-core with a GTX 1080 Ti.</p>
+      </div>
+      <div class="steps">
+        <figure>
+          <img class="shot" src="img/aicui-wedding-page.png" width="2048" height="1080" loading="lazy" alt="AICUI with the wedding project open: the file tree, six goals ticked, the AI terminal, and beside it the finished page in Firefox">
+          <figcaption>The project: six goals, each ticked only after its checks passed.</figcaption>
+        </figure>
+        <figure>
+          <img class="shot" src="img/aicui-asks-before-editing.png" width="2048" height="1080" loading="lazy" alt="AICUI showing its change to index.html with a bar: Waiting for you: allow edit index.html? Allow, Always, No">
+          <figcaption>It shows the exact change and waits for you: Allow, Always or No.</figcaption>
+        </figure>
+        <figure>
+          <img class="shot" src="img/aicui-edit-done.png" width="2048" height="1080" loading="lazy" alt="AICUI after the edit: done, the note quoted, and where it sits on the page">
+          <figcaption>It makes the change, checks it, and says where it went.</figcaption>
+        </figure>
+        <figure>
+          <img class="shot" src="img/wedding-page-edited.png" width="2048" height="1080" loading="lazy" alt="The wedding page in Firefox with the new swimming-gear note under the parking note">
+          <figcaption>The page, updated.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap story">
+      <div class="story-head">
+        <p class="eyebrow">THE TEACHING ASSISTANT</p>
+        <h2>Learn from your own mistakes</h2>
+        <p style="color:var(--muted)">A broken two-line Python script, and a request to explain before fixing.</p>
+      </div>
+      <div class="steps">
+        <figure>
+          <img class="shot" src="img/aicui-explains-then-fixes.png" width="2048" height="1080" loading="lazy" alt="AICUI explaining two mistakes in a Python script line by line, then asking: Want me to fix it now?">
+          <figcaption>It explains each mistake, asks before fixing, and shows the change.</figcaption>
+        </figure>
+        <figure>
+          <img class="shot" src="img/aicui-fixed-and-checked.png" width="2048" height="1080" loading="lazy" alt="AICUI after the fix: it ran the script, which printed Hello World twice, and summarized the two changes">
+          <figcaption>Then it runs your script to prove the fix and sums up what changed.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="in-charge">
+    <div class="wrap">
+      <p class="eyebrow">YOU OWN THE COMPUTER, AND THE BUTTON</p>
+      <h2 style="margin-block:1rem 2.5rem">The assistant may recommend, explain and prepare. It never approves.</h2>
+      <div class="principles">
+        <div><h3>It runs on your computer</h3><p>The model runs on your own graphics card with llama.cpp. Nothing you type leaves the machine unless you click Search, and then it shows what would be sent.</p></div>
+        <div><h3>It asks first</h3><p>Anything that changes your system or your files asks first. Administrator actions ask for your password every time.</p></div>
+        <div><h3>Nothing about you, anywhere</h3><p>No ads, no telemetry, no account. Its only connections are updates, models you choose to download, and searches you click.</p></div>
+        <div><h3>Every update is signed by a person</h3><p>Updates come from our own repository, signed with a key that lives on a USB stick in a drawer and is used by hand for each release.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="try">
+    <div class="wrap try">
+      <div>
+        <p class="eyebrow">TRY IT</p>
+        <h2 style="margin-top:1rem">From download to daily use</h2>
+        <ol>
+          <li><div><b>Download</b><span>The ISO from Hugging Face. The page shows its SHA-256, so you can check the file is really ours.</span></div></li>
+          <li><div><b>Write it to a USB stick</b><span>With balenaEtcher or Rufus, from Windows, no commands. <a href="https://github.com/Cin-MinAI/Cin-MinAI/blob/main/docs/install/make-usb-stick.md">Step-by-step guide</a>.</span></div></li>
+          <li><div><b>Start from the stick and try it</b><span>The assistant works right away, even offline: a small model comes on the stick.</span></div></li>
+          <li><div><b>Install it</b><span>On a drive, when you're ready.</span></div></li>
+          <li><div><b>Use it every day</b><span>And find out what it's good for. That's the point.</span></div></li>
+        </ol>
+      </div>
+      <aside class="needs">
+        <h3>What you need</h3>
+        <ul>
+          <li>A 64-bit PC that runs Linux Mint 22, and an <b>8 GB USB stick</b> to try it.</li>
+          <li>For full speed: a graphics card with <b>6 GB or more</b>. NVIDIA (GTX 10 series and newer) or AMD (less tested, reports welcome). Without one it still works, slowly, on the processor.</li>
+          <li>Disk space: what Mint needs (20 GB) plus about 3 GB for the built-in model.</li>
+        </ul>
+        <p style="color:var(--muted)">No picture? The assistant can't help with a black screen, so the hardware lessons are written down: <a href="https://github.com/Cin-MinAI/Cin-MinAI/blob/main/docs/hardware.md">hardware notes</a>.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section id="open">
+    <div class="wrap">
+      <p class="eyebrow">BUILT IN THE OPEN</p>
+      <h2 style="margin-top:1rem">Every decision and every failure, written down</h2>
+      <p style="margin-top:1rem;color:var(--muted)">Phone photos from the first boots: the first live USB answering questions, choosing a driver
+        on real hardware, a boot menu that still said Linux Mint, and a shutdown that hung. All fixed, all in the journal.</p>
+      <div class="photos">
+        <figure><img src="img/09-lookup-check-decline.jpg" width="480" height="640" loading="lazy" alt="Phone photo: the sidebar on the first live USB answering a Wi-Fi question, a disk check and a polite no to a voting question"><figcaption>The first live USB.</figcaption></figure>
+        <figure><img src="img/04-assistant-which-driver.jpg" width="480" height="640" loading="lazy" alt="Phone photo: the assistant opening Driver Manager and checking which graphics driver the GTX 1080 Ti needs"><figcaption>“There's 2 drivers, which one is for my computer?”</figcaption></figure>
+        <figure><img src="img/01-grub-menu-still-mint.jpg" width="640" height="480" loading="lazy" alt="Phone photo: the first boot menu, still saying Linux Mint"><figcaption>The first boot menu still said Linux Mint.</figcaption></figure>
+        <figure><img src="img/12-shutdown-at-spi-not-responding.jpg" width="640" height="480" loading="lazy" alt="Phone photo: a shutdown dialog saying at-spi-registryd is not responding"><figcaption>The first shutdown hung.</figcaption></figure>
+      </div>
+      <div class="open-links">
+        <a class="btn ghost" href="https://github.com/Cin-MinAI/Cin-MinAI/blob/main/docs/dev-journal.md">The development journal</a>
+        <a class="btn ghost" href="https://github.com/Cin-MinAI/Cin-MinAI/blob/main/docs/PLAN.md">Every decision (PLAN)</a>
+        <a class="btn ghost" href="https://huggingface.co/CinMin/guide-4b">The built-in model and how it was trained</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="credits">Cin-MinAI is led by <b>Ian McClenathan</b> and built with AI assistants, each where it worked best and none
+      preferred: Gemini (the first plan), Claude (lead developer) and Codex. It stands on Linux Mint, Ubuntu, Debian, the Linux kernel,
+      llama.cpp, the Qwen models, LibreOffice and Mozilla.</p>
+    <p>Code: GPL-3.0-or-later · documents and data: CC BY-SA 4.0 · the guide model: Apache-2.0. Cin-MinAI is not affiliated with or endorsed by Linux Mint.</p>
+    <p><a href="https://github.com/Cin-MinAI/Cin-MinAI">GitHub</a> · <a href="https://huggingface.co/CinMin">Hugging Face</a> · <a href="https://cin-minai.github.io/cinminai-apt/">Package repository</a></p>
+  </div>
+</footer>
+</body>
+</html>
