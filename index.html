@@ -86,6 +86,9 @@ figcaption { margin-top: 0.75rem; font-size: var(--step--1); color: var(--muted)
 
 /* story strips */
 .story { display: grid; gap: 2.5rem; }
+.excerpt { margin: 0; max-width: 65ch; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 3px solid var(--signal); }
+.excerpt p { margin: 0; font-size: var(--step-1, 1.15rem); line-height: 1.65; }
+.excerpt footer { margin-top: 0.9rem; font-size: var(--step--1); color: var(--muted); }
 .story-head { display: grid; gap: 1rem; }
 .steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.5rem; counter-reset: step; }
 .steps figure { margin: 0; min-width: 0; }
@@ -269,6 +272,20 @@ footer .wrap { display: grid; gap: 1rem; }
           <figcaption>Then it runs your script to prove the fix and sums up what changed.</figcaption>
         </figure>
       </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap story">
+      <div class="story-head">
+        <p class="eyebrow">THE WRITING ASSISTANT, ON A REAL STORY</p>
+        <h2>“The Indigo Incident”</h2>
+        <p style="color:var(--muted)">A painting company that paints with glitter, an office chicken, and a team missing someone. The ideas were thrown at the wall and kept as notes; the assistant asked questions until they took the shape of a story, then wrote a 5,000-word first draft with its writing model, on a GTX 1080 Ti. Not edited:</p>
+      </div>
+      <blockquote class="excerpt">
+        <p>One day, when a client arrived to inspect their newly painted kitchen, Steven greeted them with a bow and a flourish, as if he were hosting a royal event. The client, a young man named Mark, looked at the walls—painted in deep blue with flecks of gold glitter and a mural of a sun rising over the Caribbean. He turned to Steven, who was now wearing a crown made of paintbrushes. “This is… something,” Mark said. Steven nodded solemnly. “We’re not just painting houses, Mark. We’re painting dreams.” Mark blinked. “I thought we were just painting a kitchen.” Steven grinned. “Well, you get both.”</p>
+        <footer>From the first draft. A first draft is where your editing starts, and the story stays yours: a document in your Documents folder, and in Writer when you want it.</footer>
+      </blockquote>
     </div>
   </section>
 
