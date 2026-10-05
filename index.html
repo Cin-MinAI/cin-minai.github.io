@@ -76,6 +76,13 @@ section + section { border-top: 1px solid var(--line); }
 .shot { border-radius: 10px; border: 1px solid var(--line); box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,164,236,0.08); background: var(--panel); }
 figcaption { margin-top: 0.75rem; font-size: var(--step--1); color: var(--muted); max-width: 60ch; }
 
+/* why: Ian's own words, one readable column */
+.why { display: grid; gap: 1.25rem; max-width: 65ch; }
+.why p { font-size: var(--step-1); line-height: 1.65; }
+.why .stand { font-family: var(--display); font-stretch: 75%; font-weight: 850; font-size: var(--step-3); line-height: 1.1; color: var(--signal); margin-block: 0.75rem; }
+.why .stand span { display: block; margin-top: 0.4rem; font-size: var(--step-1); font-stretch: 85%; font-weight: 700; color: var(--text); }
+.why .sign { font-size: var(--step-0); color: var(--muted); }
+
 /* the assistants */
 .assistants-head { display: grid; gap: 1rem; margin-bottom: 2.5rem; }
 .assistants { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
@@ -142,6 +149,7 @@ footer .wrap { display: grid; gap: 1rem; }
     <div class="top">
       <img src="img/logo.svg" alt="Cin-MinAI" width="152" height="50">
       <nav aria-label="Sections">
+        <a href="#why">Why I made it</a>
         <a href="#assistants">What it does</a>
         <a href="#in-charge">You're in charge</a>
         <a href="#try">Try it</a>
@@ -171,6 +179,24 @@ footer .wrap { display: grid; gap: 1rem; }
 </header>
 
 <main>
+  <section id="why">
+    <div class="wrap">
+      <p class="eyebrow">WHY I MADE IT</p>
+      <h2 style="margin-block:1rem 2rem">Why did I make Cin-MinAI?</h2>
+      <div class="why">
+        <p>I remember being a kid and being excited about all sorts of new things: riding a bike for the first time, finishing a book for the first time, doing something, anything, new for the first time. I grew up when the information age was getting its legs. The web was still finding its feet, phones still had cords, and people talked face to face.</p>
+        <p>I remember installing Windows 98 for the first time, then getting online with an AOL trial disk. There was a frontier feeling I didn't get again until I found the hardware hacking scene, putting old games, through emulators, onto newer game consoles. You did your installation and explored your digital world. Once it was installed, it felt like mine. I could explore without feeling like every click was somebody else's business.</p>
+        <p>Something got lost since then, and it wasn't because things evolved. It was greed. Our digital freedom was traded away, sometimes for security, more often to keep a service profitable, and we were told it was for our own good. When <a href="https://en.wikipedia.org/wiki/LUSFiber">Lafayette, Louisiana set out to build its own fiber network</a>, Cox and BellSouth took the city to court. The people voted for it anyway, 62 percent. Software went the same way: things you once bought became things you rent, and every update asked for a little more of your computer.</p>
+        <p>And it's still happening. Microsoft, the company that sold me that Windows 98 disc, now won't let you set up Windows 11 without signing into its servers. In 2025 it announced it was <a href="https://www.techradar.com/computing/windows/microsoft-is-removing-known-mechanisms-for-creating-a-local-account">“removing known mechanisms for creating a local account,”</a> the very workarounds people used to keep their own computer to themselves. Your PC, your files, your login, all tied to their account before you've opened a single program. That isn't security. It's a leash.</p>
+        <p class="stand">I call you out, monster.<span>I won't stand down anymore.</span></p>
+        <p>I'm making this stand for the little people, the ones without the means to fight a company that size. Nas said all he needs is one mic. All I need is one chance with you, and that chance is to remind you what you have a computer for. It's not for maintaining some digital monster.</p>
+        <p>Use your computer like you use your car. It's yours to drive however you want, whenever you want, wherever you want, for better or worse. Cin-MinAI asks for no account. You make your user on your own machine, and it's yours.</p>
+        <p>I made Cin-MinAI to give that experience back. I want you to be skeptical. I want you to think this AI stuff is weird, and then I want you to try it. I want you to experience Cin-MinAI the way I experienced Windows 98: with the excitement of discovering what your computer can do, building things, and exploring ideas.</p>
+        <p class="sign">— Ian (Brickmii)</p>
+      </div>
+    </div>
+  </section>
+
   <section id="assistants">
     <div class="wrap">
       <div class="assistants-head">
