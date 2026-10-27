@@ -10,6 +10,7 @@
 <meta name="description" content="Every part, what it does, how they fit together, how to put them together, and how to put Cin-MinAI on it. Written for your first build.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="tabs.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
 /* The same ground as the home page (index.html): the dark panel, the brand blue, the condensed display face. This
@@ -56,10 +57,6 @@ section + section { border-top: 1px solid var(--line); }
 .hero { padding-block: clamp(2rem, 5vw, 3.5rem) clamp(2.5rem, 6vw, 4rem); background:
   radial-gradient(60rem 30rem at 80% 10%, rgba(0,164,236,0.15), transparent 60%),
   radial-gradient(40rem 24rem at 5% 95%, rgba(16,105,121,0.2), transparent 60%), var(--void); }
-.top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
-.top img { width: 9.5rem; display: block; }
-.top a.home { color: var(--muted); text-decoration: none; font-size: var(--step--1); }
-.top a.home:hover { color: var(--text); }
 .hero h1 { font-size: var(--step-4); font-weight: 850; max-width: 18ch; }
 .hero h1 em { font-style: normal; color: var(--signal); }
 .lede { margin-top: 1.25rem; font-size: var(--step-1); }
@@ -139,33 +136,42 @@ footer .wrap { display: grid; gap: 1rem; }
 </head>
 <body>
 
+<div class="sitebar">
+  <div class="wrap">
+    <a href="./"><img src="img/logo.svg" alt="Cin-MinAI home" width="152" height="50"></a>
+    <nav class="sitetabs" aria-label="Site">
+      <a href="./">Cin-MinAI</a>
+      <a href="build-a-pc.html" aria-current="page">Build a PC</a>
+    </nav>
+  </div>
+</div>
+
 <header class="hero">
   <div class="wrap">
-    <div class="top">
-      <a href="./"><img src="img/logo.svg" alt="Cin-MinAI home" width="152" height="50"></a>
-      <a class="home" href="./">← Back to Cin-MinAI</a>
-    </div>
     <p class="eyebrow">A GUIDE FOR YOUR FIRST BUILD</p>
     <h1 style="margin-top:1rem">Build a PC, then put <em>Cin-MinAI</em> on it.</h1>
     <p class="lede">Every part, what it does, how the parts fit together, how to put them together, and how to
       install Cin-MinAI at the end. No experience needed. If you can build furniture from a box, you can build a PC.</p>
     <p class="lede muted" style="font-size:var(--step-0)">It doesn't have to be new or expensive. We build Cin-MinAI
       on a 2014 computer with a used graphics card. Plan on an afternoon for your first build, and take your time.</p>
-    <ul class="toc" aria-label="On this page">
-      <li><a href="#tools">What you need</a></li>
-      <li><a href="#parts">The parts</a></li>
-      <li><a href="#fit">Will it fit?</a></li>
-      <li><a href="#build">Put it together</a></li>
-      <li><a href="#first-start">First start</a></li>
-      <li><a href="#install">Install Cin-MinAI</a></li>
-      <li><a href="#trouble">If something's wrong</a></li>
-    </ul>
   </div>
 </header>
 
+<nav class="tabs" aria-label="Steps">
+  <div class="wrap" role="tablist">
+    <a role="tab" href="#tools" aria-controls="tools">1 · What you need</a>
+    <a role="tab" href="#parts" aria-controls="parts">2 · The parts</a>
+    <a role="tab" href="#fit" aria-controls="fit">3 · Will it fit?</a>
+    <a role="tab" href="#build" aria-controls="build">4 · Put it together</a>
+    <a role="tab" href="#first-start" aria-controls="first-start">5 · First start</a>
+    <a role="tab" href="#install" aria-controls="install">6 · Install Cin-MinAI</a>
+    <a role="tab" href="#trouble" aria-controls="trouble">Troubleshooting</a>
+  </div>
+</nav>
+
 <main>
 
-  <section id="tools">
+  <section id="tools" role="tabpanel">
     <div class="wrap">
       <div class="head col">
         <p class="eyebrow">BEFORE YOU START</p>
@@ -185,7 +191,8 @@ footer .wrap { display: grid; gap: 1rem; }
           <h3>To install Cin-MinAI</h3>
           <ul class="list">
             <li><b>A monitor, keyboard and mouse.</b> Any monitor works; check its cable fits a port on your graphics card (HDMI or DisplayPort).</li>
-            <li><b>A USB stick of 8 GB or more.</b> It gets erased.</li>
+            <li><b>A USB thumb drive (USB stick) of 8 GB or more.</b> Cin-MinAI goes onto it to install from, and
+              everything already on it gets erased.</li>
             <li><b>Another computer</b> to make the stick (Windows, Mac or Linux), once.</li>
             <li><b>No Windows license.</b> Cin-MinAI is the operating system, and it's free.</li>
           </ul>
@@ -197,10 +204,11 @@ footer .wrap { display: grid; gap: 1rem; }
           discharge static. Keep the power supply unplugged from the wall while you work. Never open the power
           supply itself: it holds a charge even when unplugged.</p>
       </div>
+      <p class="next-tab"><a class="btn primary" href="#parts">Next: The parts →</a></p>
     </div>
   </section>
 
-  <section id="parts">
+  <section id="parts" role="tabpanel">
     <div class="wrap">
       <div class="head col">
         <p class="eyebrow">THE SHOPPING LIST</p>
@@ -337,6 +345,19 @@ footer .wrap { display: grid; gap: 1rem; }
             <a href="https://github.com/Cin-MinAI/Cin-MinAI/blob/main/docs/install/make-usb-stick.md">Why, and how</a>.</p>
         </article>
 
+        <article class="part">
+          <p class="what">USB THUMB DRIVE · TO INSTALL FROM</p>
+          <h3>Don't forget this one</h3>
+          <p>Cin-MinAI installs from a <b>USB thumb drive</b> (also called a USB stick or flash drive): you put
+            Cin-MinAI on it with another computer, then start the new PC from it.</p>
+          <ul class="list">
+            <li><b>8 GB or more.</b> Any brand. A USB 3 drive (often blue inside the plug) is faster.</li>
+            <li><b>It gets erased.</b> Use an empty one, or copy its files off first.</li>
+          </ul>
+          <p class="fit"><b>Check</b> you have one before the build day: without it there's no way to put an
+            operating system on the new PC.</p>
+        </article>
+
         <article class="part wide">
           <p class="what">TWO GRAPHICS CARDS? AND THE "THROW-TOGETHER" BUILD</p>
           <h3>Ways to spend less, or go bigger later</h3>
@@ -353,10 +374,11 @@ footer .wrap { display: grid; gap: 1rem; }
         </article>
 
       </div>
+      <p class="next-tab"><a class="btn primary" href="#fit">Next: Will it fit? →</a></p>
     </div>
   </section>
 
-  <section id="fit">
+  <section id="fit" role="tabpanel">
     <div class="wrap">
       <div class="head col">
         <p class="eyebrow">BEFORE YOU BUY</p>
@@ -375,10 +397,11 @@ footer .wrap { display: grid; gap: 1rem; }
         <li><div><b>NVMe drive ↔ motherboard.</b> <span>The board has an M.2 slot for NVMe drives of that length (usually 2280).</span></div></li>
         <li><div><b>Monitor ↔ graphics card.</b> <span>A cable that fits both (HDMI or DisplayPort).</span></div></li>
       </ul>
+      <p class="next-tab"><a class="btn primary" href="#build">Next: Put it together →</a></p>
     </div>
   </section>
 
-  <section id="build">
+  <section id="build" role="tabpanel">
     <div class="wrap">
       <div class="head col">
         <p class="eyebrow">PUT IT TOGETHER</p>
@@ -463,10 +486,11 @@ footer .wrap { display: grid; gap: 1rem; }
           <p>Tie the loose cables out of the fans' way. Close the case after the first start works.</p>
         </div></li>
       </ol>
+      <p class="next-tab"><a class="btn primary" href="#first-start">Next: First start →</a></p>
     </div>
   </section>
 
-  <section id="first-start">
+  <section id="first-start" role="tabpanel">
     <div class="wrap">
       <div class="head col">
         <p class="eyebrow">THE FIRST START</p>
@@ -501,10 +525,11 @@ footer .wrap { display: grid; gap: 1rem; }
           <p>If all three show, switch off, put the side panels on, and you've built a PC.</p>
         </div></li>
       </ol>
+      <p class="next-tab"><a class="btn primary" href="#install">Next: Install Cin-MinAI →</a></p>
     </div>
   </section>
 
-  <section id="install">
+  <section id="install" role="tabpanel">
     <div class="wrap">
       <div class="head col">
         <p class="eyebrow">INSTALL CIN-MINAI</p>
@@ -558,7 +583,7 @@ footer .wrap { display: grid; gap: 1rem; }
     </div>
   </section>
 
-  <section id="trouble">
+  <section id="trouble" role="tabpanel">
     <div class="wrap">
       <div class="head col">
         <p class="eyebrow">IF SOMETHING'S WRONG</p>
@@ -613,5 +638,6 @@ footer .wrap { display: grid; gap: 1rem; }
     <p><a href="./">Cin-MinAI home</a> · <a href="https://github.com/Cin-MinAI/Cin-MinAI">GitHub</a> · <a href="https://huggingface.co/CinMin">Hugging Face</a></p>
   </div>
 </footer>
+<script src="tabs.js" defer></script>
 </body>
 </html>

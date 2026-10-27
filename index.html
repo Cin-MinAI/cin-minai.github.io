@@ -11,6 +11,7 @@
 <meta name="description" content="Linux Mint with an AI assistant built in. It runs on your own graphics card. Free, no ads, no telemetry, no account.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="tabs.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
 /* Layout: the page reads like the desktop it describes. A dark "space" ground, the sidebar's own status line as the
@@ -52,7 +53,7 @@ section { padding-block: clamp(3.5rem, 8vw, 6.5rem); }
 section + section { border-top: 1px solid var(--line); }
 
 /* hero */
-.hero { padding-block: clamp(2rem, 5vw, 4rem) clamp(3rem, 7vw, 5rem); background:
+.hero { padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(3rem, 7vw, 5rem); background:
   radial-gradient(60rem 30rem at 75% 20%, rgba(0,164,236,0.16), transparent 60%),
   radial-gradient(40rem 24rem at 10% 90%, rgba(16,105,121,0.22), transparent 60%), var(--void); }
 .top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: clamp(2rem, 6vw, 4rem); }
@@ -144,19 +145,18 @@ footer .wrap { display: grid; gap: 1rem; }
 </head>
 <body>
 
+<div class="sitebar">
+  <div class="wrap">
+    <a href="./"><img src="img/logo.svg" alt="Cin-MinAI" width="152" height="50"></a>
+    <nav class="sitetabs" aria-label="Site">
+      <a href="./" aria-current="page">Cin-MinAI</a>
+      <a href="build-a-pc.html">Build a PC</a>
+    </nav>
+  </div>
+</div>
+
 <header class="hero">
   <div class="wrap">
-    <div class="top">
-      <img src="img/logo.svg" alt="Cin-MinAI" width="152" height="50">
-      <nav aria-label="Sections">
-        <a href="#why">Why I made it</a>
-        <a href="#assistants">What it does</a>
-        <a href="#in-charge">You're in charge</a>
-        <a href="#try">Try it</a>
-        <a href="build-a-pc.html">Build a PC</a>
-        <a href="#open">Built in the open</a>
-      </nav>
-    </div>
     <div class="hero-grid">
       <div>
         <p class="status">Ready · runs on this computer · what you type stays here</p>
@@ -179,8 +179,18 @@ footer .wrap { display: grid; gap: 1rem; }
   </div>
 </header>
 
+<nav class="tabs" aria-label="Sections">
+  <div class="wrap" role="tablist">
+    <a role="tab" href="#why" aria-controls="why">Why I made it</a>
+    <a role="tab" href="#assistants" aria-controls="assistants">What it does</a>
+    <a role="tab" href="#in-charge" aria-controls="in-charge">You're in charge</a>
+    <a role="tab" href="#try" aria-controls="try">Try it</a>
+    <a role="tab" href="#open" aria-controls="open">Built in the open</a>
+  </div>
+</nav>
+
 <main>
-  <section id="why">
+  <section id="why" role="tabpanel">
     <div class="wrap">
       <p class="eyebrow">WHY I MADE IT</p>
       <h2 style="margin-block:1rem 2rem">Why did I make Cin-MinAI?</h2>
@@ -198,7 +208,8 @@ footer .wrap { display: grid; gap: 1rem; }
     </div>
   </section>
 
-  <section id="assistants">
+  <div id="assistants" role="tabpanel">
+  <section>
     <div class="wrap">
       <div class="assistants-head">
         <p class="eyebrow">ONE ASSISTANT, MANY JOBS</p>
@@ -323,7 +334,9 @@ footer .wrap { display: grid; gap: 1rem; }
     </div>
   </section>
 
-  <section id="in-charge">
+  </div>
+
+  <section id="in-charge" role="tabpanel">
     <div class="wrap">
       <p class="eyebrow">YOU OWN THE COMPUTER, AND THE BUTTON</p>
       <h2 style="margin-block:1rem 2.5rem">The assistant may recommend, explain and prepare. It never approves.</h2>
@@ -336,7 +349,7 @@ footer .wrap { display: grid; gap: 1rem; }
     </div>
   </section>
 
-  <section id="try">
+  <section id="try" role="tabpanel">
     <div class="wrap try">
       <div>
         <p class="eyebrow">TRY IT</p>
@@ -362,7 +375,7 @@ footer .wrap { display: grid; gap: 1rem; }
     </div>
   </section>
 
-  <section id="open">
+  <section id="open" role="tabpanel">
     <div class="wrap">
       <p class="eyebrow">BUILT IN THE OPEN</p>
       <h2 style="margin-top:1rem">Every decision and every failure, written down</h2>
@@ -392,5 +405,6 @@ footer .wrap { display: grid; gap: 1rem; }
     <p><a href="https://github.com/Cin-MinAI/Cin-MinAI">GitHub</a> · <a href="https://huggingface.co/CinMin">Hugging Face</a> · <a href="https://cin-minai.github.io/cinminai-apt/">Package repository</a></p>
   </div>
 </footer>
+<script src="tabs.js" defer></script>
 </body>
 </html>
