@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="img/logo.svg" type="image/svg+xml">
+<meta property="og:title" content="Build a PC for Cin-MinAI">
+<meta property="og:description" content="Every part, what it does, how they fit together, how to put them together, and how to put Cin-MinAI on it. Written for your first build.">
+<title>Build a PC for Cin-MinAI</title>
+<meta name="description" content="Every part, what it does, how they fit together, how to put them together, and how to put Cin-MinAI on it. Written for your first build.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* The same ground as the home page (index.html): the dark panel, the brand blue, the condensed display face. This
+   page is a manual, so it reads in one column with a parts grid, numbered steps and a fault table. */
+:root {
+  --void: #000000;
+  --panel: #02141C;
+  --raised: #072430;
+  --line: #12404D;
+  --signal: #00A4EC;
+  --ready: #18D42C;
+  --warn: #F5B841;
+  --glow: #34B5B8;
+  --text: #E6F4F8;
+  --muted: #9DBCC6;
+  --on-signal: #000000;
+  --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", Verdana, sans-serif;
+  --mono: "JetBrains Mono", "DejaVu Sans Mono", Consolas, monospace;
+  --step--1: 0.875rem; --step-0: 1.0625rem; --step-1: 1.3rem; --step-2: 1.75rem; --step-3: 2.5rem; --step-4: clamp(2.4rem, 6.5vw, 4.4rem);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--void); scroll-padding-top: 1rem; }
+body { margin: 0; background: var(--void); color: var(--text); font: 400 var(--step-0)/1.6 var(--body); }
+a { color: var(--signal); text-underline-offset: 3px; }
+a:hover { color: var(--glow); }
+a:focus-visible, .btn:focus-visible { outline: 2px solid var(--glow); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 72rem; margin: 0 auto; padding-inline: 20px; }
+.col { max-width: 48rem; }
+h1, h2, h3 { font-family: var(--display); font-stretch: 70%; font-weight: 800; line-height: 1.05; text-wrap: balance; margin: 0; letter-spacing: 0.005em; }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-1); font-stretch: 85%; font-weight: 750; line-height: 1.2; }
+p { margin: 0; max-width: 68ch; }
+b, strong { color: var(--text); }
+.eyebrow { font-family: var(--mono); font-size: var(--step--1); color: var(--muted); letter-spacing: 0.04em; }
+.muted { color: var(--muted); }
+section { padding-block: clamp(3rem, 7vw, 5.5rem); }
+section + section { border-top: 1px solid var(--line); }
+.head { display: grid; gap: 1rem; margin-bottom: 2.25rem; }
+.flow > * + * { margin-top: 1rem; }
+
+/* top */
+.hero { padding-block: clamp(2rem, 5vw, 3.5rem) clamp(2.5rem, 6vw, 4rem); background:
+  radial-gradient(60rem 30rem at 80% 10%, rgba(0,164,236,0.15), transparent 60%),
+  radial-gradient(40rem 24rem at 5% 95%, rgba(16,105,121,0.2), transparent 60%), var(--void); }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+.top img { width: 9.5rem; display: block; }
+.top a.home { color: var(--muted); text-decoration: none; font-size: var(--step--1); }
+.top a.home:hover { color: var(--text); }
+.hero h1 { font-size: var(--step-4); font-weight: 850; max-width: 18ch; }
+.hero h1 em { font-style: normal; color: var(--signal); }
+.lede { margin-top: 1.25rem; font-size: var(--step-1); }
+.toc { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; list-style: none; }
+.toc a { display: inline-block; padding: 0.45rem 0.9rem; border: 1px solid var(--line); border-radius: 999px; color: var(--text); text-decoration: none; font-size: var(--step--1); }
+.toc a:hover { border-color: var(--glow); }
+
+/* callouts */
+.callout { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--signal); border-radius: 10px; padding: 1.1rem 1.25rem; display: grid; gap: 0.5rem; max-width: 48rem; }
+.callout.warn { border-left-color: var(--warn); }
+.callout h3 { font-size: var(--step-0); font-stretch: 90%; }
+.callout p { color: var(--muted); }
+
+/* tools and the shopping list */
+.list { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.55rem; }
+.list li::marker { color: var(--signal); }
+.parts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+.part { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 1.4rem; display: grid; gap: 0.8rem; align-content: start; min-width: 0; }
+.part .what { font-family: var(--mono); font-size: var(--step--1); color: var(--signal); }
+.part p, .part li { color: var(--muted); }
+.part .list { gap: 0.4rem; }
+.part .fit { font-size: var(--step--1); background: var(--raised); border-radius: 8px; padding: 0.7rem 0.85rem; color: var(--text); }
+.part .fit b { color: var(--warn); }
+.part.wide { grid-column: 1 / -1; }
+
+/* the compatibility checklist */
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; max-width: 52rem; }
+.checks li { display: grid; grid-template-columns: 1.6rem minmax(0, 1fr); gap: 0.6rem; }
+.checks li::before { content: ""; width: 1.05rem; height: 1.05rem; margin-top: 0.3rem; border: 2px solid var(--signal); border-radius: 4px; }
+.checks span { color: var(--muted); }
+
+/* numbered steps */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.6rem; counter-reset: s; max-width: 52rem; }
+.steps > li { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: 0.9rem; }
+.steps > li::before { counter-increment: s; content: counter(s); font-family: var(--display); font-stretch: 70%; font-weight: 850; font-size: var(--step-2); color: var(--signal); line-height: 1; }
+.steps h3 { margin-bottom: 0.4rem; }
+.steps p { color: var(--muted); }
+.steps p + p, .steps p + .list, .steps .list + p { margin-top: 0.6rem; }
+.steps .list { color: var(--muted); }
+.key { font-family: var(--mono); font-size: 0.92em; background: var(--raised); border: 1px solid var(--line); border-radius: 5px; padding: 0.05rem 0.4rem; color: var(--text); white-space: nowrap; }
+
+/* the fault table */
+.faults { width: 100%; max-width: 60rem; border-collapse: collapse; font-size: var(--step--1); }
+.faults th, .faults td { text-align: left; vertical-align: top; padding: 0.85rem 0.9rem; border-bottom: 1px solid var(--line); }
+.faults th { font-family: var(--mono); font-weight: 600; color: var(--muted); font-size: 0.8rem; letter-spacing: 0.04em; }
+.faults td:first-child { color: var(--text); font-weight: 700; width: 32%; }
+.faults td { color: var(--muted); }
+
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.3rem; border-radius: 999px; font-family: var(--display); font-stretch: 90%; font-weight: 750; font-size: var(--step-0); text-decoration: none; }
+.btn.primary { background: var(--signal); color: var(--on-signal); }
+.btn.primary:hover { background: var(--glow); color: var(--on-signal); }
+.btn.ghost { border: 1px solid var(--line); color: var(--text); }
+.btn.ghost:hover { border-color: var(--glow); color: var(--text); }
+.actions { margin-top: 1.75rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+footer { border-top: 1px solid var(--line); padding-block: 2.5rem 3rem; color: var(--muted); font-size: var(--step--1); }
+footer .wrap { display: grid; gap: 1rem; }
+
+@media (max-width: 760px) {
+  .parts { grid-template-columns: minmax(0, 1fr); }
+  .faults, .faults tbody, .faults tr, .faults td { display: block; width: 100%; }
+  .faults thead { display: none; }
+  .faults tr { border-bottom: 1px solid var(--line); padding-block: 0.6rem; }
+  .faults td { border: 0; padding: 0.25rem 0; }
+  .faults td:first-child { width: 100%; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn, .toc a { transition: background-color 0.15s, border-color 0.15s, color 0.15s; }
+}
+@media print {
+  :root { --void: #fff; --panel: #fff; --raised: #f2f5f6; --line: #c9d6db; --text: #000; --muted: #333; --signal: #005f8a; }
+  .hero { background: none; }
+  .toc, .actions { display: none; }
+  section { padding-block: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="top">
+      <a href="./"><img src="img/logo.svg" alt="Cin-MinAI home" width="152" height="50"></a>
+      <a class="home" href="./">← Back to Cin-MinAI</a>
+    </div>
+    <p class="eyebrow">A GUIDE FOR YOUR FIRST BUILD</p>
+    <h1 style="margin-top:1rem">Build a PC, then put <em>Cin-MinAI</em> on it.</h1>
+    <p class="lede">Every part, what it does, how the parts fit together, how to put them together, and how to
+      install Cin-MinAI at the end. No experience needed. If you can build furniture from a box, you can build a PC.</p>
+    <p class="lede muted" style="font-size:var(--step-0)">It doesn't have to be new or expensive. We build Cin-MinAI
+      on a 2014 computer with a used graphics card. Plan on an afternoon for your first build, and take your time.</p>
+    <ul class="toc" aria-label="On this page">
+      <li><a href="#tools">What you need</a></li>
+      <li><a href="#parts">The parts</a></li>
+      <li><a href="#fit">Will it fit?</a></li>
+      <li><a href="#build">Put it together</a></li>
+      <li><a href="#first-start">First start</a></li>
+      <li><a href="#install">Install Cin-MinAI</a></li>
+      <li><a href="#trouble">If something's wrong</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+
+  <section id="tools">
+    <div class="wrap">
+      <div class="head col">
+        <p class="eyebrow">BEFORE YOU START</p>
+        <h2>What you need besides the parts</h2>
+      </div>
+      <div class="parts">
+        <div class="part">
+          <h3>Tools</h3>
+          <ul class="list">
+            <li><b>A Phillips screwdriver</b> (a #2, the ordinary size). A magnetic tip helps with the tiny screws.</li>
+            <li><b>A table and good light.</b> A phone flashlight helps for the dark corners of the case.</li>
+            <li><b>A few zip ties or twist ties</b> to keep cables tidy (optional).</li>
+            <li><b>A small bowl</b> for screws. Each part comes with its own bag; keep them apart.</li>
+          </ul>
+        </div>
+        <div class="part">
+          <h3>To install Cin-MinAI</h3>
+          <ul class="list">
+            <li><b>A monitor, keyboard and mouse.</b> Any monitor works; check its cable fits a port on your graphics card (HDMI or DisplayPort).</li>
+            <li><b>A USB stick of 8 GB or more.</b> It gets erased.</li>
+            <li><b>Another computer</b> to make the stick (Windows, Mac or Linux), once.</li>
+            <li><b>No Windows license.</b> Cin-MinAI is the operating system, and it's free.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warn" style="margin-top:1.5rem">
+        <h3>Static and safety, in three lines</h3>
+        <p>Build on a hard floor or a table, not on carpet, and touch the bare metal of the case now and then to
+          discharge static. Keep the power supply unplugged from the wall while you work. Never open the power
+          supply itself: it holds a charge even when unplugged.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="parts">
+    <div class="wrap">
+      <div class="head col">
+        <p class="eyebrow">THE SHOPPING LIST</p>
+        <h2>The parts, what each one does, and what to buy</h2>
+        <p class="muted">For Cin-MinAI, one part matters more than all the others: the <b>graphics card's memory</b>,
+          because that's where the AI runs. Spend there first. Everything else can be modest, and used parts are fine.
+          Where a box says <b style="color:var(--warn)">Must match</b>, that part has to agree with another one.</p>
+      </div>
+
+      <div class="parts">
+
+        <article class="part">
+          <p class="what">CPU · THE PROCESSOR</p>
+          <h3>Runs everything that isn't the AI</h3>
+          <p>Any 64-bit processor from the last ten years or so with <b>4 cores or more</b> is enough. Intel Core i5/i7
+            or AMD Ryzen 5/7 are the usual picks. Our test PC has a 2014 Intel i7-4790K.</p>
+          <p><b>A nice extra:</b> built-in graphics. Then the monitor can plug into the motherboard and the whole
+            graphics card goes to the AI (see the <a href="https://github.com/Cin-MinAI/Cin-MinAI/blob/main/docs/hardware.md">hardware notes</a>).
+            Intel models with an <b>F</b> in the name (i5-12400F) and most Ryzens without a <b>G</b> have none.</p>
+          <p class="fit"><b>Must match</b> the motherboard's <b>socket</b> (the shape it sits in), for example AM4,
+            AM5 or LGA1700. The motherboard's page lists which processors it takes.</p>
+        </article>
+
+        <article class="part">
+          <p class="what">MOTHERBOARD</p>
+          <h3>What everything plugs into</h3>
+          <p>Choose the processor first, then a board with its socket. Look for:</p>
+          <ul class="list">
+            <li>An <b>M.2 slot</b> for an NVMe drive (almost every board since about 2016).</li>
+            <li>A long <b>PCIe x16 slot</b> for the graphics card.</li>
+            <li><b>Ethernet</b> on the back panel (nearly all have it), and Wi-Fi if you need it (see below).</li>
+            <li>Enough <b>USB ports</b> on the back for your keyboard, mouse and stick.</li>
+          </ul>
+          <p class="fit"><b>Must match</b> the processor's socket, the memory type (DDR3, DDR4 or DDR5), and the case's
+            size: <b>ATX</b> (full), <b>Micro-ATX</b> (shorter) or <b>Mini-ITX</b> (small).</p>
+        </article>
+
+        <article class="part">
+          <p class="what">RAM · MEMORY</p>
+          <h3>The computer's working space</h3>
+          <p><b>16 GB</b> is comfortable. <b>32 GB</b> is better for AI: bigger models spill over from the graphics
+            card into memory. Buy it as a <b>kit of two matching sticks</b> (2 × 8 GB or 2 × 16 GB); two sticks are
+            faster than one.</p>
+          <p class="fit"><b>Must match</b> the motherboard's memory type. DDR4 and DDR5 sticks look alike but are
+            notched differently, and one won't go into the other's slot.</p>
+        </article>
+
+        <article class="part">
+          <p class="what">GPU · THE GRAPHICS CARD</p>
+          <h3>Where the AI runs. Spend here.</h3>
+          <p>What counts is the card's own memory, called <b>VRAM</b>, not how fast it plays games:</p>
+          <ul class="list">
+            <li><b>6 GB:</b> the minimum for full speed.</li>
+            <li><b>8–12 GB:</b> a good everyday assistant, and room for the coding assistant.</li>
+            <li><b>16 GB or more:</b> the bigger, smarter models.</li>
+          </ul>
+          <p><b>NVIDIA</b>, GTX 10 series and newer, is what we test most. <b>AMD</b> works too, but it's less
+            tested (reports welcome). A used card is great value: ours is a GTX 1080 Ti with 11 GB.</p>
+          <p class="fit"><b>Must match</b> the power supply's cables (6-pin, 8-pin, or the newer 16-pin
+            12V-2x6) and the case's length. The card's page gives both.</p>
+        </article>
+
+        <article class="part">
+          <p class="what">PSU · THE POWER SUPPLY</p>
+          <h3>Don't buy the cheapest one</h3>
+          <p>A poor power supply can take other parts with it when it fails. Buy one from a known brand with an
+            <b>80 Plus Bronze</b> rating or better. As a rule of thumb:</p>
+          <ul class="list">
+            <li><b>550–650 W</b> for one mid-range graphics card.</li>
+            <li><b>750–850 W</b> for a high-end card. The card's maker gives a recommended wattage on its page.</li>
+          </ul>
+          <p><b>Modular</b> (the cables unplug from it) makes building tidier, but isn't needed.</p>
+          <p class="fit"><b>Must have</b> the graphics card's power connectors, an <b>8-pin CPU</b> cable
+            (often labeled 4+4) and the <b>24-pin</b> motherboard cable.</p>
+        </article>
+
+        <article class="part">
+          <p class="what">STORAGE · NVMe AND SATA</p>
+          <h3>Where the system and the AI models live</h3>
+          <p>AI models are big files, and a fast drive answers faster. On our test PC a large model ran
+            <b>four times faster</b> from an NVMe drive than from a USB disk.</p>
+          <ul class="list">
+            <li><b>NVMe (M.2):</b> a small stick that screws onto the motherboard. The best choice. <b>1 TB</b> is a
+              good size, because models fill a drive fast.</li>
+            <li><b>SATA SSD:</b> a 2.5-inch drive on a cable. Good, and fine on older boards.</li>
+            <li><b>Hard disk (HDD):</b> cheap space for files and parked models; slow for running them.</li>
+          </ul>
+          <p class="fit"><b>Check</b> the board's M.2 slot: most take <b>2280</b> drives (80 mm long). Some slots only
+            take SATA M.2 drives, and boards older than about 2016 may not start from NVMe at all. The manual says.</p>
+        </article>
+
+        <article class="part">
+          <p class="what">CASE</p>
+          <h3>The box, and how it breathes</h3>
+          <p>Pick one with a <b>mesh front</b> for airflow and front USB ports you'll use. It should come with at
+            least two fans.</p>
+          <p class="fit"><b>Must fit</b> the motherboard's size (ATX, Micro-ATX, Mini-ITX), the graphics card's
+            <b>length</b> and the CPU cooler's <b>height</b>. The case's page lists all three as "maximum".</p>
+        </article>
+
+        <article class="part">
+          <p class="what">COOLING</p>
+          <h3>Keeping it quiet and cool</h3>
+          <ul class="list">
+            <li><b>The cooler in the processor's box</b> is fine for most builds, if it came with one.</li>
+            <li><b>A tower air cooler</b> is quieter and cooler, simple, and lasts for years.</li>
+            <li><b>Liquid coolers (AIO)</b> look good and work well, but they're more to install and not needed for
+              a first build.</li>
+            <li><b>Case fans:</b> front fans pull air <b>in</b>, back and top fans push it <b>out</b>. The arrow on a
+              fan's side shows which way it blows.</li>
+          </ul>
+          <p class="fit"><b>Must fit</b> the socket (the cooler's box lists them) and the case's cooler height. New
+            coolers usually come with thermal paste already on them.</p>
+        </article>
+
+        <article class="part">
+          <p class="what">NETWORK · ETHERNET AND WI-FI</p>
+          <h3>Getting online</h3>
+          <p><b>Ethernet</b> (a network cable to your router) is built into almost every motherboard, and it simply
+            works. Use it if you can.</p>
+          <p><b>Wi-Fi:</b> the easiest way is a motherboard with Wi-Fi built in. Otherwise, add a <b>PCIe Wi-Fi card</b>
+            or a <b>USB Wi-Fi adapter</b>.</p>
+          <p class="fit"><b>Check</b> it works on Linux. Cards with an <b>Intel</b> Wi-Fi chip are the safest bet. Some
+            cheap USB adapters need drivers Linux doesn't include, so look for "Linux supported" on the box. Bluetooth
+            often comes on the same card.</p>
+        </article>
+
+        <article class="part">
+          <p class="what">OPERATING SYSTEM</p>
+          <h3>Cin-MinAI. It's free.</h3>
+          <p>Cin-MinAI is Linux Mint with the AI assistant built in: no license key, no account, no subscription. You
+            install it from the USB stick at the end of this guide.</p>
+          <p>Keeping Windows too? Put each system on <b>its own drive</b>, so neither can break the other.
+            <a href="https://github.com/Cin-MinAI/Cin-MinAI/blob/main/docs/install/make-usb-stick.md">Why, and how</a>.</p>
+        </article>
+
+        <article class="part wide">
+          <p class="what">TWO GRAPHICS CARDS? AND THE "THROW-TOGETHER" BUILD</p>
+          <h3>Ways to spend less, or go bigger later</h3>
+          <ul class="list">
+            <li><b>Used parts</b> are how we build. A processor, memory and a motherboard from a few years ago cost
+              little, and the AI barely notices. Spend the savings on graphics card memory.</li>
+            <li><b>A used office PC</b> (the small desktops companies sell off) can be a cheap start, but check before
+              you buy a graphics card for it: their power supplies are usually small and their cases short. Many can
+              only take a low-profile card.</li>
+            <li><b>Two graphics cards:</b> Cin-MinAI can split a big model across two cards, so their memory adds up.
+              You need two long slots, room in the case and a power supply for both. Start with one; it's an upgrade
+              for later.</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="fit">
+    <div class="wrap">
+      <div class="head col">
+        <p class="eyebrow">BEFORE YOU BUY</p>
+        <h2>Will it all fit? Check these eight things</h2>
+        <p class="muted">Most first-build problems come from one of these. <a href="https://pcpartpicker.com">PCPartPicker</a>
+          checks most of them for you: add your parts and it warns you when two don't fit.</p>
+      </div>
+      <ul class="checks">
+        <li><div><b>Processor ↔ motherboard socket.</b> <span>The same socket name on both, and the board's
+          CPU support list includes your processor.</span></div></li>
+        <li><div><b>Memory ↔ motherboard.</b> <span>DDR3, DDR4 or DDR5: the same on both.</span></div></li>
+        <li><div><b>Motherboard ↔ case.</b> <span>ATX, Micro-ATX or Mini-ITX: the case lists which it takes.</span></div></li>
+        <li><div><b>Graphics card ↔ case.</b> <span>The card's length is under the case's maximum.</span></div></li>
+        <li><div><b>Cooler ↔ case and socket.</b> <span>Its height is under the case's maximum, and it lists your socket.</span></div></li>
+        <li><div><b>Graphics card ↔ power supply.</b> <span>Enough watts, and the right power connectors.</span></div></li>
+        <li><div><b>NVMe drive ↔ motherboard.</b> <span>The board has an M.2 slot for NVMe drives of that length (usually 2280).</span></div></li>
+        <li><div><b>Monitor ↔ graphics card.</b> <span>A cable that fits both (HDMI or DisplayPort).</span></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="build">
+    <div class="wrap">
+      <div class="head col">
+        <p class="eyebrow">PUT IT TOGETHER</p>
+        <h2>The build, in order</h2>
+        <p class="muted">Keep the <b>motherboard manual</b> open beside you: it shows where every plug goes on your
+          board. The order matters a little: some parts are much easier to fit before the motherboard goes into the
+          case.</p>
+      </div>
+      <ol class="steps">
+        <li><div>
+          <h3>Unbox, and set the motherboard on its box</h3>
+          <p>Lay the motherboard flat on top of its own cardboard box (not on the shiny bag it came in). It's easier to
+            work on outside the case. Touch the case's metal first to discharge static.</p>
+        </div></li>
+        <li><div>
+          <h3>The processor</h3>
+          <p>Lift the socket's lever. Find the small <b>triangle</b> on one corner of the processor and the matching
+            mark on the socket, and <b>lower it straight in</b>. It drops in with no pressure at all. Close the lever
+            (on Intel boards, the plastic cover pops off as you do; keep it in case you ever return the board).</p>
+          <p><b>Never push.</b> If it doesn't sit flat, it's turned the wrong way. The pins are delicate.</p>
+        </div></li>
+        <li><div>
+          <h3>The memory</h3>
+          <p>With two sticks, use the slots the manual names (usually the <b>second and fourth</b> from the processor,
+            labeled A2 and B2). Open the latches, line up the notch, and press firmly on both ends until the latches
+            <b>click</b> shut. It takes more force than you'd expect.</p>
+        </div></li>
+        <li><div>
+          <h3>The NVMe drive</h3>
+          <p>Remove the M.2 slot's small screw or clip (and its heatsink cover, if there is one). Slide the drive in at
+            a slight angle, press it down flat, and fix it with the screw or clip. If the heatsink has a sticker
+            film, peel it off before putting the cover back.</p>
+        </div></li>
+        <li><div>
+          <h3>The CPU cooler</h3>
+          <p>Follow the cooler's own leaflet: coolers mount differently. If it has no paste on it, put a <b>pea-sized
+            drop</b> of thermal paste in the middle of the processor; the cooler's pressure spreads it. Tighten its
+            screws a little at a time, corner to corner. Plug its fan into the header labeled <b>CPU_FAN</b>.</p>
+        </div></li>
+        <li><div>
+          <h3>Get the case ready</h3>
+          <p>Take off both side panels. If your motherboard came with a separate <b>back-panel plate</b> (the "I/O
+            shield"), press it into the case's back opening <b>now</b>, from the inside. It's the most forgotten
+            step in PC building. Check the case's small brass <b>standoffs</b> line up with the motherboard's screw
+            holes.</p>
+        </div></li>
+        <li><div>
+          <h3>The motherboard into the case</h3>
+          <p>Lower it in at an angle so its ports line up with the back opening, rest it on the standoffs, and screw
+            it down. Snug is enough; don't overtighten.</p>
+        </div></li>
+        <li><div>
+          <h3>The power supply</h3>
+          <p>Mount it in its spot (usually the bottom back), fan facing a vent. Then connect:</p>
+          <ul class="list">
+            <li>The wide <b>24-pin</b> cable to the motherboard's side.</li>
+            <li>The <b>8-pin CPU</b> cable to the top-left corner of the board. <b>This is the one people forget:</b>
+              without it, nothing starts.</li>
+          </ul>
+        </div></li>
+        <li><div>
+          <h3>The graphics card</h3>
+          <p>Remove the case's slot covers where the card's ports will sit (usually two). Open the latch at the end of
+            the <b>top long PCIe slot</b>, press the card in until the latch <b>clicks</b>, and screw it to the case.
+            Then plug in its power cables, <b>all the way in</b> (the newer 16-pin plug must have no gap).</p>
+        </div></li>
+        <li><div>
+          <h3>The small front-panel plugs</h3>
+          <p>The case's power button, reset button and lights connect to a row of tiny pins on the board, usually
+            labeled <b>F_PANEL</b> or <b>JFP1</b>. The manual has a diagram; the plugs are labeled
+            (POWER SW, RESET SW, HDD LED, POWER LED). The LED plugs have a + and a − side; the switches don't care.
+            Also connect the front <b>USB</b> and <b>audio</b> cables to their headers.</p>
+          <p>This is the fiddliest step. Use the flashlight, and take your time.</p>
+        </div></li>
+        <li><div>
+          <h3>Fans and any SATA drives</h3>
+          <p>Case fans plug into headers labeled <b>SYS_FAN</b> or <b>CHA_FAN</b>. A SATA drive needs two cables: a
+            data cable to the motherboard and a power cable from the power supply.</p>
+        </div></li>
+        <li><div>
+          <h3>Leave the side panels off for now</h3>
+          <p>Tie the loose cables out of the fans' way. Close the case after the first start works.</p>
+        </div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="first-start">
+    <div class="wrap">
+      <div class="head col">
+        <p class="eyebrow">THE FIRST START</p>
+        <h2>Turn it on and check it sees everything</h2>
+      </div>
+      <ol class="steps">
+        <li><div>
+          <h3>Plug the monitor into the graphics card</h3>
+          <p>Use a port <b>on the graphics card</b>, not the motherboard's. (Later you can move it to the motherboard
+            to give the AI the whole card; the <a href="https://github.com/Cin-MinAI/Cin-MinAI/blob/main/docs/hardware.md">hardware
+            notes</a> show the safe order.) Plug in the keyboard, the mouse, an Ethernet cable if you have one, and the
+            power cord. Switch on the power supply's own switch at the back (<b>I</b> is on).</p>
+        </div></li>
+        <li><div>
+          <h3>Press the power button and open the setup screen</h3>
+          <p>The fans spin, and after a moment a logo appears. Press <span class="key">Delete</span> or <span class="key">F2</span>
+            a few times right away to open the setup screen (the BIOS). The first start can take a minute or two
+            while the board checks the memory, and may restart once by itself. That's normal.</p>
+        </div></li>
+        <li><div>
+          <h3>Check three things</h3>
+          <ul class="list">
+            <li>The <b>processor</b> shows by name.</li>
+            <li>The <b>memory</b> shows its full amount (16 GB, 32 GB).</li>
+            <li>Your <b>drives</b> are listed (often under Storage or Boot).</li>
+          </ul>
+          <p>Optional: turn on <b>XMP</b> or <b>EXPO</b> so the memory runs at its rated speed. Leave Secure Boot as it
+            is: Cin-MinAI works with it on or off.</p>
+        </div></li>
+        <li><div>
+          <h3>Close it up</h3>
+          <p>If all three show, switch off, put the side panels on, and you've built a PC.</p>
+        </div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="install">
+    <div class="wrap">
+      <div class="head col">
+        <p class="eyebrow">INSTALL CIN-MINAI</p>
+        <h2>From the USB stick to your own desktop</h2>
+        <p class="muted">About 15 minutes to make the stick and 15 more to install. No commands to type.</p>
+      </div>
+      <ol class="steps">
+        <li><div>
+          <h3>Make the stick on another computer</h3>
+          <p>Download Cin-MinAI from Hugging Face and write it to the USB stick with balenaEtcher or Rufus.
+            The <a href="https://github.com/Cin-MinAI/Cin-MinAI/blob/main/docs/install/make-usb-stick.md">step-by-step
+            guide</a> shows every click, and how to check the download is really ours.</p>
+        </div></li>
+        <li><div>
+          <h3>Start the new PC from the stick</h3>
+          <p>Plug the stick into a port on the <b>back</b> of the PC, switch on, and press the boot-menu key a few times
+            right away: often <span class="key">F12</span>, <span class="key">F11</span>, <span class="key">F8</span> or
+            <span class="key">Esc</span>. Choose the USB stick. On a brand-new PC with empty drives it often starts from the stick by itself.</p>
+          <p>At the Cin-MinAI menu, choose the first option. If the screen stays black, restart and choose
+            <b>compatibility mode</b>.</p>
+        </div></li>
+        <li><div>
+          <h3>Try it</h3>
+          <p>You're running Cin-MinAI from the stick: nothing is installed yet. Open the assistant from the sidebar (or
+            press <span class="key">Super</span>+<span class="key">A</span>) and ask it something. From the stick it's slower,
+            because it uses the processor.</p>
+        </div></li>
+        <li><div>
+          <h3>Install</h3>
+          <p>Double-click <b>Install Cin-MinAI</b> on the desktop. Choose your language and keyboard, then
+            <b>Erase disk and install</b>, and check the drive shown is the one you meant, by its size and name.
+            Make your user name and password. They stay on this computer; there's no account to sign into.</p>
+          <p>If the PC has a second drive with files you want to keep, unplug it before installing, and plug it back in
+            afterwards.</p>
+        </div></li>
+        <li><div>
+          <h3>After the first start</h3>
+          <ul class="list">
+            <li><b>Update Manager:</b> install what it offers.</li>
+            <li><b>NVIDIA card:</b> open <b>Driver Manager</b> and choose the recommended NVIDIA driver, then restart.
+              The assistant runs at full speed after that. On GTX 900 and 10 series cards, stay on the <b>580</b> driver:
+              it's the last one that supports them.</li>
+            <li><b>Ask the assistant</b> anything about your new computer, starting with "Is everything working?"</li>
+          </ul>
+        </div></li>
+      </ol>
+      <div class="actions">
+        <a class="btn primary" href="https://huggingface.co/CinMin/Cin-MinAI-OS">Download Cin-MinAI</a>
+        <a class="btn ghost" href="https://github.com/Cin-MinAI/Cin-MinAI/blob/main/docs/install/make-usb-stick.md">Make the USB stick</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="trouble">
+    <div class="wrap">
+      <div class="head col">
+        <p class="eyebrow">IF SOMETHING'S WRONG</p>
+        <h2>Nothing on the screen? It's almost always a cable</h2>
+        <p class="muted">Switch off and unplug from the wall before you check anything inside. Many motherboards have
+          four small lights near the memory, labeled <b>CPU, DRAM, VGA, BOOT</b>: the one that stays lit tells you
+          where to look.</p>
+      </div>
+      <table class="faults">
+        <thead><tr><th>WHAT HAPPENS</th><th>WHAT TO CHECK</th></tr></thead>
+        <tbody>
+          <tr><td>Nothing at all: no lights, no fans</td><td>The power supply's switch at the back, the wall socket, the
+            24-pin cable, and the case's POWER SW plug on the front-panel pins.</td></tr>
+          <tr><td>Fans spin but there's no picture</td><td>The monitor is plugged into the <b>graphics card</b>, and the
+            monitor's input is set to that port. Then: the <b>8-pin CPU</b> cable, the graphics card's power cables,
+            and the memory (press each stick in again until both latches click). Give the first start two full
+            minutes: it checks the memory and may restart once.</td></tr>
+          <tr><td>The DRAM light stays on, or it beeps</td><td>Memory: re-seat both sticks in the slots the manual
+            names. Try one stick at a time.</td></tr>
+          <tr><td>The VGA light stays on</td><td>The graphics card: seated until the latch clicks, power cables all the
+            way in, monitor on the card.</td></tr>
+          <tr><td>It restarts over and over</td><td>The CPU cooler's fan is plugged into CPU_FAN, and the cooler sits
+            flat and tight. If you turned on XMP or EXPO, turn it off again.</td></tr>
+          <tr><td>The drive isn't listed in the setup screen</td><td>The NVMe drive is pressed flat and screwed in. Some
+            M.2 slots switch off SATA ports when used; the manual says which. A SATA drive needs both its data and
+            power cables.</td></tr>
+          <tr><td>It starts Windows or "no boot device" instead of the stick</td><td>Use the boot-menu key again, or a
+            USB port on the back of the PC. Write the stick again if it still doesn't show.</td></tr>
+          <tr><td>Black screen after choosing Cin-MinAI on the stick</td><td>Restart and choose <b>compatibility
+            mode</b> from the menu.</td></tr>
+          <tr><td>No Wi-Fi after installing</td><td>Plug in an Ethernet cable and ask the assistant "my Wi-Fi isn't
+            working": it looks at what's installed. Some USB adapters need drivers Linux doesn't include.</td></tr>
+        </tbody>
+      </table>
+      <div class="callout" style="margin-top:2rem">
+        <h3>Once the screen works, ask the assistant</h3>
+        <p>Cin-MinAI's assistant can't help with a black screen, but as soon as you see the desktop it can check your
+          drives, memory, temperatures and drivers, and explain what it finds in plain words. The lessons we learned
+          on our own machines are in the <a href="https://github.com/Cin-MinAI/Cin-MinAI/blob/main/docs/hardware.md">hardware
+          notes</a>. Stuck? Ask the project on <a href="https://github.com/Cin-MinAI/Cin-MinAI">GitHub</a> and tell us
+          your parts.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>This guide is part of Cin-MinAI and is published under CC BY-SA 4.0. Improvements are welcome. Cin-MinAI is
+      not affiliated with or endorsed by Linux Mint, or by any hardware maker named here.</p>
+    <p><a href="./">Cin-MinAI home</a> · <a href="https://github.com/Cin-MinAI/Cin-MinAI">GitHub</a> · <a href="https://huggingface.co/CinMin">Hugging Face</a></p>
+  </div>
+</footer>
+</body>
+</html>
